@@ -25,15 +25,9 @@ public class HelloWorldRestResource {
      * @param host WebSphere server hostname (default: localhost)
      * @param port WebSphere server port (default: 2809)
      * @param schema Provider URL schema (default: corbaloc)
-     * @param protocol Transport protocol - iiop or iiops (default: iiop)
+     * @param protocol Transport protocol - iiop (default: iiop)
      * @return JSON response with the EJB result or error
      * 
-     * Examples:
-     * GET /api/hello
-     * GET /api/hello?name=John
-     * GET /api/hello?host=server.example.com&port=2809
-     * GET /api/hello?schema=corbaloc&protocol=iiops&host=server.example.com&port=2814
-     * GET /api/hello?name=John&schema=corbaloc&protocol=iiop&host=localhost&port=2809
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -144,17 +138,17 @@ public class HelloWorldRestResource {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("name", "Optional name for personalized greeting");
         parameters.put("host", "WebSphere server hostname (default: localhost)");
-        parameters.put("port", "WebSphere IIOP/IIOPS port (default: 2809 for IIOP, 2814 for IIOPS)");
+        parameters.put("port", "WebSphere IIOP/IIOPS port (default: 2809 for IIOP)");
         parameters.put("schema", "Provider URL schema (default: corbaloc)");
-        parameters.put("protocol", "Transport protocol - iiop or iiops (default: iiop)");
+        parameters.put("protocol", "Transport protocol - iiop (default: iiop)");
         info.put("parameters", parameters);
         
         String[] examples = {
             "GET /api/hello",
             "GET /api/hello?name=John",
             "GET /api/hello?host=server.example.com&port=2809",
-            "GET /api/hello?schema=corbaloc&protocol=iiops&host=server.example.com&port=2814",
-            "GET /api/hello?name=John&schema=corbaloc&protocol=iiop&host=localhost&port=2809"
+            "GET /api/hello?schema=corbaname&protocol=iiop&host=server.example.com&port=2809",
+            "GET /api/hello?name=John&schema=corbaname&protocol=iiop&host=localhost&port=2809"
         };
         info.put("examples", examples);
         
@@ -162,4 +156,3 @@ public class HelloWorldRestResource {
     }
 }
 
-// Made with Bob
