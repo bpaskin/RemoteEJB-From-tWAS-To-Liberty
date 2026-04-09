@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <title>HelloWorld EJB Test - Jakarta Faces</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #666;
+            margin-top: 30px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .form-section {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .input-group {
+            margin: 15px 0;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .input-group input[type="text"] {
+            width: 300px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #545b62;
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+        }
+        
+        .btn-success:hover {
+            background-color: #1e7e34;
+        }
+        
+        .results {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .errors {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .result-item, .error-item {
+            margin: 5px 0;
+            padding: 5px 0;
+        }
+        
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .links {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+        }
+        
+        .links h3 {
+            margin-top: 0;
+            color: #495057;
+        }
+        
+        .links a {
+            color: #007bff;
+            text-decoration: none;
+            margin-right: 15px;
+        }
+        
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="container">
+        <h1>HelloWorld EJB Test - Jakarta Faces 4.0</h1>
+        
+        <h:form id="mainForm">
+            <!-- Automatic Tests Section -->
+            <div class="test-section">
+                <h2>Automatic EJB Tests</h2>
+                <p>These tests run automatically when the page loads, similar to the servlet functionality:</p>
+                
+                <!-- Results Display -->
+                <h:panelGroup rendered="#{helloController.hasResults}">
+                    <div class="results">
+                        <h3>✓ Test Results:</h3>
+                        <ui:repeat value="#{helloController.results}" var="result">
+                            <div class="result-item">#{result}</div>
+                        </ui:repeat>
+                    </div>
+                </h:panelGroup>
+                
+                <!-- Errors Display -->
+                <h:panelGroup rendered="#{helloController.hasErrors}">
+                    <div class="errors">
+                        <h3>✗ Errors:</h3>
+                        <ui:repeat value="#{helloController.errors}" var="error">
+                            <div class="error-item">#{error}</div>
+                        </ui:repeat>
+                    </div>
+                </h:panelGroup>
+                
+                <div style="margin-top: 15px;">
+                    <h:commandButton value="Refresh Tests" 
+                                   action="#{helloController.refreshTests}" 
+                                   styleClass="btn btn-secondary">
+                        <f:ajax execute="@form" render="mainForm" />
+                    </h:commandButton>
+                </div>
+            </div>
+            
+            <!-- Interactive Personalized Greeting Section -->
+            <div class="test-section">
+                <h2>Interactive Personalized Greeting</h2>
+                <div class="form-section">
+                    <div class="input-group">
+                        <label for="nameInput">Enter your name for a personalized greeting:</label>
+                        <h:inputText id="nameInput" 
+                                   value="#{helloController.name}" 
+                                   placeholder="Enter your name here..."
+                                   styleClass="form-control" />
+                    </div>
+                    
+                    <div class="input-group">
+                        <h:commandButton value="Say Hello" 
+                                       action="#{helloController.sayPersonalizedHello}" 
+                                       styleClass="btn btn-success">
+                            <f:ajax execute="nameInput" render="mainForm" />
+                        </h:commandButton>
+                        
+                        <h:commandButton value="Clear Results" 
+                                       action="#{helloController.clearResults}" 
+                                       styleClass="btn btn-secondary">
+                            <f:ajax execute="@form" render="mainForm" />
+                        </h:commandButton>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Information Section -->
+            <div class="links">
+                <h3>About This Application</h3>
+                <p>This Jakarta Faces 4.0 page provides the same functionality as the HelloWorldTestServlet:</p>
+                <ul>
+                    <li><strong>Direct EJB Injection:</strong> Tests modern @EJB annotation-based injection</li>
+                    <li><strong>JNDI Lookup:</strong> Tests traditional JNDI-based EJB lookup</li>
+                    <li><strong>Personalized Greeting:</strong> Interactive form to test parameterized EJB methods</li>
+                </ul>
+                
+                <h3>Compare with Servlet Version</h3>
+                <a href="#{request.contextPath}/test">Basic Servlet Test</a>
+                <a href="#{request.contextPath}/test?name=Jakarta">Servlet with Parameter</a>
+                <a href="#{request.contextPath}/hello">Alternative Servlet URL</a>
+            </div>
+        </h:form>
+    </div>
+</h:body>
+</html>

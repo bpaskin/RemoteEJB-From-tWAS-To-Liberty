@@ -1,0 +1,41 @@
+<server description="HelloWorld EJB Server with JSP and CDI">
+
+  <featureManager>
+    <feature>enterpriseBeansRemote-4.0</feature>
+    <feature>servlet-6.0</feature>
+    <feature>faces-4.0</feature>
+    <feature>cdi-4.0</feature>
+    <feature>appClientSupport-2.0</feature>
+    <feature>transportSecurity-1.0</feature>
+    <feature>appSecurity-5.0</feature>
+  </featureManager>
+
+  <httpEndpoint id="defaultHttpEndpoint" httpPort="-1" httpsPort="9443" host="*" />
+
+  <orb id="defaultOrb" iiopEndpointRef="defaultIiopEndpoint">
+    <serverPolicy.csiv2>
+      <layers>
+        <transportLayer sslRef="defaultSSLConfig" sslEnabled="true" />
+        <authenticationLayer establishTrustInClient="Never" />
+      </layers>
+    </serverPolicy.csiv2>
+  </orb>
+
+  <iiopEndpoint id="defaultIiopEndpoint" host="localhost" iiopPort="2809">
+    <iiopsOptions iiopsPort="2814" sslRef="defaultSSLConfig" />
+  </iiopEndpoint>
+
+  <ssl id="defaultSSLConfig" keyStoreRef="defaultKeyStore" trustStoreRef="defaultTrustStore" />
+  <keyStore id="defaultKeyStore" location="key.p12" type="PKCS12" password="passw0rd" />
+  <keyStore id="defaultTrustStore" location="trust.p12" type="PKCS12" password="passw0rd" />
+
+  <basicRegistry id="basic" realm="BasicRealm">
+    <user name="admin" password="admin123" />
+    <user name="user1" password="user123" />
+  </basicRegistry>
+
+  <!-- Logging configuration -->
+  <logging traceSpecification="*=info:Naming=all:IIOP=all:org.apache.yoko.*=all:yoko.verbose.*=all"
+    maxFileSize="20" maxFiles="10" />
+
+</server>
