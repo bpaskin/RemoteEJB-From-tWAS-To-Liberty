@@ -230,7 +230,7 @@ The server will start on:
 ### 3. Test the Connection
 
 Access the client application:
-- WebSphere: http://your-was-server:9080/helloworldclient/
+- WebSphere: http://your-was-server:9080/helloworldclient/hello
 - Or use the REST endpoint: http://your-was-server:9080/helloworldclient/api/hello
 
 ## References
